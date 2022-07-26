@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace OneListClient
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var client = new HttpClient();
 
