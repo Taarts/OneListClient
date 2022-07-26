@@ -38,7 +38,21 @@ namespace OneListClient
         {
             var client = new HttpClient();
 
-            var responseAsStream = await client.GetStreamAsync("https://one-list-api.herokuapp.com/items?access_token=sdg-handbook");
+            var token = "";
+            if (args.Length == 0)
+            {
+                Console.Write("What list would you like? ");
+                token = Console.ReadLine();
+            }
+            else
+            {
+                token = args[0];
+            }
+            // token be the first argument of the program (not sure what that means)
+
+            var url = $"https://one-list-api.herokuapp.com/items?access_token={token}";
+
+            var responseAsStream = await client.GetStreamAsync(url);
 
             var items = await JsonSerializer.DeserializeAsync<List<Item>>(responseAsStream);
 
@@ -48,6 +62,7 @@ namespace OneListClient
                 // Console.WriteLine($"The task {item.Text}, was created on {item.CreatedAt} and has a completion of: {item.CompletedStatus}");
                 table.AddRow(item.Text, item.CreatedAt, item.CompletedStatus);
             }
+            table.Write();
         }
     }
 }
